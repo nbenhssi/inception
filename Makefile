@@ -1,47 +1,25 @@
-NAME = inception
-COMPOSE = docker compose -f srcs/docker-compose.yml
+NAME		= inception
+DATA_PATH	= /home/nbenhssi/data
 
-DATA_DIR = /home/nbenhssi/data
-DB_DIR = $(DATA_DIR)/mariadb
-WP_DIR = $(DATA_DIR)/wordpress
+COMPOSE	= docker compose \
+	  -f srcs/docker-compose.yml \
+	  --env-file srcs/.env
 
-all: up
-
-dirs:
-	mkdir -p $(DB_DIR)
-	mkdir -p $(WP_DIR)
-
-build: dirs
-	$(COMPOSE) build
-
-up: dirs
-	$(COMPOSE) up -d
+all:
+	@mkdir -p $(DATA_PATH)/mariadb
+	@mkdir -p $(DATA_PATH)/wordpress
+	$(COMPOSE) up -d --build
 
 down:
 	$(COMPOSE) down
 
-start:
-	$(COMPOSE) start
-
-stop:
-	$(COMPOSE) stop
-
-restart: down up
-
-logs:
-	$(COMPOSE) logs -f
-
-ps:
-	$(COMPOSE) ps
-
 clean:
-	$(COMPOSE) down --rmi all
+	$(COMPOSE) down -v
 
-fclean:
-	$(COMPOSE) down --rmi all --volumes --remove-orphans
+fclean: clean
 	docker system prune -af
-	sudo rm -rf $(DATA_DIR)
+	sudo rm -rf $(DATA_PATH)
 
 re: fclean all
 
-.PHONY: all dirs build up down start stop restart logs ps clean fclean re
+.PHONY: all down clean fclean re

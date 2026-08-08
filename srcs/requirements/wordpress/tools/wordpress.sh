@@ -21,8 +21,6 @@ if [ ! -f wp-config.php ]; then
 
     echo "Installing WordPress..."
 
-    rm -f index.nginx-debian.html
-
     wp core download --allow-root
 
     wp config create \

@@ -7,8 +7,6 @@ RUN apt update && \
         php8.2-mysql \
         mariadb-client \
         curl \
-        wget \
-        ca-certificates \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 

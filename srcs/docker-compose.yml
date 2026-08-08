@@ -2,7 +2,7 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
-    image: inception-mariadb
+    image: inception-mariadb:noura
     restart: always
     env_file:
       - .env
@@ -14,7 +14,7 @@ services:
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
-    image: inception-wordpress
+    image: inception-wordpress:noura
     restart: always
     env_file:
       - .env
@@ -28,7 +28,7 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
-    image: inception-nginx
+    image: inception-nginx:noura
     restart: always
     depends_on:
       - wordpress
